@@ -1,0 +1,6 @@
+Precisa ter :
+
+() CRUD de cadernos (Criar, Deletar, Editar e buscar) - classe pai
+() CRUD de tarefas (Criar, Deletar, Editar e buscar) - classe filha
+() Comunicação com BD H2
+() IA - Gerar um card de front com um cartão ou caderno criado
