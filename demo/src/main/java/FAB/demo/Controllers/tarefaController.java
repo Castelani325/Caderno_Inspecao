@@ -1,10 +1,9 @@
 package FAB.demo.Controllers;
 
 
-import FAB.demo.Domain.tarefa.DadosCadastroTarefa;
-import FAB.demo.Domain.tarefa.Tarefa;
-import FAB.demo.Domain.tarefa.tarefaRepository;
-import org.apache.coyote.Response;
+import FAB.demo.Domain.Tarefa.Tarefa;
+import FAB.demo.Domain.Tarefa.tarefaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +20,10 @@ public class tarefaController {
     private tarefaRepository tarefaRepository;
 
     //POST - Criar tarefa
+    //@Valid ativa validações como NOTBLANK
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Tarefa criarTarefa (@RequestBody Tarefa tarefa) {
+    public Tarefa criarTarefa (@Valid @RequestBody Tarefa tarefa) {
         tarefa.setStatus_mantenedor("PENDENTE"); // Define um status padrão
         tarefa.setStatus_inspetor("PENDENTE"); // Define um status padrão
         return tarefaRepository.save(tarefa);
@@ -57,7 +57,7 @@ public class tarefaController {
 
     //PUT - Edita tarefa
     @PutMapping("{/id}")
-    public ResponseEntity<Tarefa> atualizaTarefa (@PathVariable Long id, @RequestBody Tarefa detalhesTarefa){
+    public ResponseEntity<Tarefa> atualizaTarefa (@Valid @PathVariable Long id, @RequestBody Tarefa detalhesTarefa){
         Optional<Tarefa> optionalTarefa = tarefaRepository.findById(id);
 
         if (!optionalTarefa.isPresent()){
@@ -85,6 +85,7 @@ public class tarefaController {
         tarefaRepository.deleteById(id);
         return ResponseEntity.noContent().build(); //Retorna http 204 (No Content)
     }
+
 
 
 }

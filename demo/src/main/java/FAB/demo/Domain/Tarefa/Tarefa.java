@@ -1,10 +1,9 @@
-package FAB.demo.Domain.tarefa;
+package FAB.demo.Domain.Tarefa;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import FAB.demo.Domain.Caderno.Caderno;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -12,6 +11,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Getter
 @Setter
 @Entity
+@Table (name = "Tarefas")
 public class Tarefa {
 
     @Id
@@ -21,6 +21,11 @@ public class Tarefa {
 
     @NotNull
     private String descricao;
+
+    @ManyToOne (fetch = FetchType.LAZY) //Lazy = só carregue do BD se for solicitado
+    @JoinColumn(name = "ccaderno_id") // Nome da coluna da chave estrangeira
+    @JsonBackReference //Mostra que essa é a classe Filha (Evita StackOverFlow de serealizacao JSON)
+    private Caderno caderno;
 
     private String status_mantenedor; //Pendente , Executado
     private String status_inspetor; // Pendente , Inspetorado

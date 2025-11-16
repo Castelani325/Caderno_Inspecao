@@ -1,4 +1,4 @@
-package FAB.demo.Domain.tarefa;
+package FAB.demo.Domain.Tarefa;
 
 public class DadosCadastroTarefa {
 }
