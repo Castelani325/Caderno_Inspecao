@@ -61,7 +61,7 @@ public class tarefaController {
 
 
     //GET - Buscar tarefa
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Tarefa> buscaTarefa (@PathVariable Long id) {
       
         Optional<Tarefa> tarefa = tarefaRepository.findById(id);
@@ -78,7 +78,7 @@ public class tarefaController {
 
 
     //PUT - Edita tarefa
-    @PutMapping("{/tarefa/{id}")
+    @PutMapping("/tarefa/{id}")
     public ResponseEntity<Tarefa> atualizaTarefa (@Valid @PathVariable Long id,@Valid @RequestBody Tarefa detalhesTarefa){
 
         return tarefaRepository.findById(id).map(tarefaExistente -> {

@@ -9,7 +9,6 @@ public interface TarefaRepository extends JpaRepository <Tarefa, Long> {
 
     //String DATA JPA cria querys automaticamente
     // Select * FROM Tarefas WHERE caderno_id = XXXX
-    List<Tarefa> findCadernoById (Long caderno_Id);
+    List<Tarefa> findByCadernoId (Long cadernoId);
 
-    List<Tarefa> findBycaderno_id(Long cadernoId);
 }

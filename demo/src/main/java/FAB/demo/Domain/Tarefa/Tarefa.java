@@ -4,13 +4,17 @@ package FAB.demo.Domain.Tarefa;
 import FAB.demo.Domain.Caderno.Caderno;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table (name = "Tarefas")
 public class Tarefa {
 
@@ -23,7 +27,7 @@ public class Tarefa {
     private String descricao;
 
     @ManyToOne (fetch = FetchType.LAZY) //Lazy = só carregue do BD se for solicitado
-    @JoinColumn(name = "caderno_id") // Nome da coluna da chave estrangeira
+    @JoinColumn(name = "id_caderno") // Nome da coluna da chave estrangeira
     @JsonBackReference //Mostra que essa é a classe Filha (Evita StackOverFlow de serealizacao JSON)
     private Caderno caderno;
 

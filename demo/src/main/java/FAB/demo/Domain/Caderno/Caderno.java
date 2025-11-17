@@ -5,8 +5,7 @@ import FAB.demo.Domain.Tarefa.Tarefa;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
@@ -15,12 +14,15 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Table(name = "cadernos")
 public class Caderno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //BD cuida da geração da Primary Key
-    private Long caderno_id;
+    private Long cadernoId;
 
 
     @NotNull
@@ -36,5 +38,9 @@ public class Caderno {
 
     public Caderno(@Valid DadosCadastroCaderno dadosCaderno) {
         this.Tipo_de_caderno = dadosCaderno.Tipo_de_caderno();
+    }
+
+    public Long getId() {
+        return cadernoId;
     }
 }

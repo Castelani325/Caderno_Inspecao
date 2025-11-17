@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/caderno")
@@ -32,23 +33,29 @@ public class cadernoController {
         return cadernoDeInspRepository.save(novoCaderno);
     };
 
-    //GET Listar cadernos
-    @GetMapping("/cadernos/{caderno_id}/tarefa")
-    public ResponseEntity <List<Tarefa>> listarCadernos (@PathVariable Long caderno_id){
+    @GetMapping
+    public ResponseEntity<List<Caderno>> listarTodosOsCadernos() {
+        List<Caderno> cadernos = cadernoDeInspRepository.findAll();
+        return ResponseEntity.ok(cadernos);
+    }
 
-        if (!cadernoDeInspRepository.existsById(caderno_id)){
+    //GET Listar tarefas de um caderno
+    @GetMapping("/{cadernoId}/tarefas")
+    public ResponseEntity<List<Tarefa>> listarTarefasDoCaderno(@PathVariable Long cadernoId) {
+
+        if (!cadernoDeInspRepository.existsById(cadernoId)){
             return ResponseEntity.notFound().build();
         }
 
-        List<Tarefa> tarefa = tarefaRepository.findBycaderno_id(caderno_id);
-        return ResponseEntity.ok(tarefa);
+        List<Tarefa> tarefas = tarefaRepository.findByCadernoId(cadernoId);
+        return ResponseEntity.ok(tarefas);
     }
 
     //GET Buscar cadernos por ID
-    @GetMapping("/{caderno_id}")
-    public ResponseEntity <Caderno> buscaCaderno (@PathVariable Long caderno_id) {
+    @GetMapping("/{idCaderno}")
+    public ResponseEntity <Caderno> buscaCaderno (@PathVariable Long cadernoId) {
 
-        return cadernoDeInspRepository.findById(caderno_id).
+        return cadernoDeInspRepository.findById(cadernoId).
                 map(ResponseEntity::ok). // Se achar, retorna 200 OK
                 orElse(ResponseEntity.notFound(). // Se não, 404
                 build());
@@ -56,13 +63,13 @@ public class cadernoController {
 
 
     //DELETE deletar cadernos
-    @DeleteMapping("/{caderno_id}")
-    public ResponseEntity<Void> deleteCaderno (@PathVariable Long caderno_id) {
-        if (!cadernoDeInspRepository.existsById(caderno_id)) {
+    @DeleteMapping("/{idCaderno}")
+    public ResponseEntity<Void> deleteCaderno (@PathVariable Long cadernoId) {
+        if (!cadernoDeInspRepository.existsById(cadernoId)) {
             return ResponseEntity.notFound().build();
         }
 
-        cadernoDeInspRepository.deleteById(caderno_id);
+        cadernoDeInspRepository.deleteById(cadernoId);
         return ResponseEntity.noContent().build();
     }
 
