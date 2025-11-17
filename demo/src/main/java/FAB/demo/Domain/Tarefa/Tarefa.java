@@ -23,13 +23,21 @@ public class Tarefa {
     private String descricao;
 
     @ManyToOne (fetch = FetchType.LAZY) //Lazy = só carregue do BD se for solicitado
-    @JoinColumn(name = "ccaderno_id") // Nome da coluna da chave estrangeira
+    @JoinColumn(name = "caderno_id") // Nome da coluna da chave estrangeira
     @JsonBackReference //Mostra que essa é a classe Filha (Evita StackOverFlow de serealizacao JSON)
     private Caderno caderno;
 
     private String status_mantenedor; //Pendente , Executado
     private String status_inspetor; // Pendente , Inspetorado
     private String secao; // CEL, HID, ROT, AVI, MOT, EQV
+
+    public Tarefa (String descricao, String status_inspetor, String status_mantenedor, String secao){
+        this.descricao = descricao;
+        this.status_inspetor = "Pendente";
+        this.status_mantenedor = "Pendente";
+        this.secao = secao;
+
+    }
 
 
 }
